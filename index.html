@@ -67,7 +67,7 @@
             You have register instructions that are local to the core but as soon as you touch even your L1 cache it's technically a global operation which all the cache coherency shenanigans that come with it.
             This does not need to be the case with the architecture I have in mind.
             Because of the linearity of terms and the locality of operations values can simply be stored as close to where they are actually used as possible.
-            Ones a computation grows larger it can be shared with neighboring cores.
+            Once a computation grows larger it can be shared with neighboring cores.
             This could effectively minimize data movement and not only reduce latencies but also reduce the energy usage.
             In most modern chips <a href="https://people.inf.ethz.ch/omutlu/pub/Google-consumer-workloads-data-movement-and-PIM_asplos18.pdf">data movements accounts for the majority of energy used</a> as computation is energetically extremely cheap in comparison.
         </p>
@@ -91,10 +91,10 @@
 
         <h2>How will this hardware be programmed?</h2>
         <p>
-            This this is general-purpose hardware you can use a general-purpose programming language to program it.
+            Since this is general-purpose hardware you can use a general-purpose programming language to program it.
             Current efforts (like Bend) basically focus mostly on functional-style programming in addition to some imperative feature that can easily be turned into functional ones.
             I believe this is unnecessarily restrictive and all that needs to be done is the effective elimination of shared mutable state.
-            However, how this can be done in practice I will same for another time...
+            However, how this can be done in practice I will save for another time...
         </p>
     </div>
 </body>
