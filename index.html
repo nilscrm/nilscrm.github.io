@@ -17,23 +17,23 @@
         <p>
             Around the beginning of last year I discovered Interaction Nets because of <a href="https://x.com/VictorTaelin/status/1791213162525524076">the somewhat viral tweet</a> by Victor Taelin.
             Since then I've been thinking almost non-stop about systems that make effective use of the useful properties of Interaction Nets.
-            Now I've reached a point where is it clear to me that the potential upsides of Computer Architectures that are designed on the basis of Interaction Nets are so immense that I've been working full-time on this project.
-            In addition, I have recently <a href="https://x.com/nilscmr/status/1879525978151719260">announced</a> that I am looking for co-founders to speed up development and in response have been getting a lot of question about what exactly it is I'm working on.
+            Now I've reached a point where it is clear to me that the potential upsides of computer architectures that are designed on the basis of Interaction Nets are so significant that I decided to work full-time on this project.
+            In addition, I have recently <a href="https://x.com/nilscmr/status/1879525978151719260">announced</a> that I am looking for co-founders to speed up development and in response have been getting a lot of questions about what exactly it is I'm working on (in large part because of the <a href="https://x.com/VictorTaelin/status/1879527956865032304">generous endorsement by Victor</a>).
             This is my attempt to explain some of these questions.
         </p>
         <h2>Why Interaction Nets?</h2>
         <p>
             Interaction Nets are an abstract model of computation.
             Computations and data are represented as graphs and rules for how two connected nodes interact determine how the graphs evolves.
-            With this arbitrary computations can be represented.
-            Studying these is like looking at Turing Machines or the Lambda Calculus, often theses don't get implemented in practice but where it gets interesting is that real world systems built on top of these, largely inherit the properties of the underlying model.
-            So let's take a look at one of the most interesting property of Interaction Nets.
+            With this, arbitrary computations can be represented.
+            Studying these is like looking at Turing Machines or the Lambda Calculus, they often don't get implemented in practice but where it gets interesting is that real-world systems built on top of these largely inherit the properties of the underlying model.
+            So let's take a look at one of the most interesting properties of Interaction Nets.
         </p>
         <p>
-            Every node in the graph can only interact with another node through a special "primary" outgoing edge.
+            Every node in the graph can interact with another node only through a special "primary" outgoing edge.
             This in particular means, every node can only be part of one computational step (one interaction).
-            There can be numerous of possible interactions all over the graph, all of which are completely independent of each other and can be executed in any order, crucially, also in parallel.
-            Through this Interaction Nets expose the inherent parallelism of computations.
+            There can be numerous possible interactions all over the graph, all of which are completely independent of each other and can be executed in any order and, crucially, also in parallel.
+            Through this, Interaction Nets expose the inherent parallelism of computations.
             Thus began the goal of building a language that utilizes this parallelism.
             The first serious attempt which got some traction is HVM by Victor Taelin and his team.
             Through neat tricks like using atomic swaps they almost completely eliminate the synchronization overhead between cores.
@@ -46,14 +46,14 @@
 
         <h2>Why is a custom architecture needed?</h2>
         <p>
-            If one manages to build a programming language that can run in parallel on all my cores, isn't that enough?
-            Well that's definitely an awesome feature to have, but my current intuition is that you will still have to have parallelism in the back of your mind to for example avoid unnecessary copies of variables.
-            With other improving models of parallel computation like futures, channels and coroutines, I expect them to be almost equally pleasant to work with (maybe with a slight bias toward Interaction Net based languages).
+            If one manages to build a programming language that can run in parallel on all available cores, isn't that enough?
+            Well that's definitely an awesome feature to have, but my current intuition is that you will still need to have parallelism in the back of your mind, for example, to avoid unnecessary copies of values.
+            With other improving approaches to parallel computation like futures, channels and coroutines, I expect them to be almost equally pleasant to work with (maybe with a slight bias towards Interaction Net-based languages).
             However, to get that you have to pay a quite significant performance penalty.
             Classical hardware is just not made to run Interaction Nets.
             Not just in the sense that interactions need to be emulated as they don't have hardware support but (maybe even more importantly) your CPU caches are hopelessly lost when it comes to the graph-based memory access pattern of Interaction Nets.
-            And even if your Interaction Net potentially provides you with lots of opportunity for parallelism, in the end of the day your computations gets scheduled on the handful cores your CPU has.
-            One might consider running them on GPUs (like HVM has done), but unless your have very specific types of programs, you will end up with terrible warp divergence or irregular memory access patterns destroying your performance.
+            And even if your Interaction Net potentially provides you with lots of opportunity for parallelism, in the end of the day your computations gets scheduled on the handful of cores your CPU has.
+            One might consider running them on GPUs (like HVM has done), but unless you have very specific types of programs, you will end up with terrible warp divergence or irregular memory access patterns destroying your performance.
         </p>
         <p>
             This is why I believe, a custom computer architecture is vital for the success of utilizing Interaction Nets.
@@ -65,9 +65,9 @@
             By the parallel nature of Interaction Nets one gets the immediate benefit of being able to scale this architecture to a large number of cores.
             While this is rather obvious I'm almost as excited for another benefit that results from the locality of Interaction Nets.
             If you think of how memory is usually organized, you have one giant blob of memory that every core can randomly access and additional caches to optimize the abysmally slow access time to DRAM.
-            You have register instructions that are local to the core but as soon as you touch even your L1 cache it's technically a global operation which all the cache coherency shenanigans that come with it.
+            You have register instructions that are local to the core but as soon as you touch even your L1 cache it's technically a global operation with all the cache coherency shenanigans that come with it.
             This does not need to be the case with the architecture I have in mind.
-            Because of the linearity of terms and the locality of operations values can simply be stored as close to where they are actually used as possible.
+            Because of the linearity of terms and the locality of operations, values can simply be stored as close as possible to where they are actually used.
             Once a computation grows larger it can be shared with neighboring cores.
             This could effectively minimize data movement and not only reduce latencies but also reduce the energy usage.
             In most modern chips <a href="https://people.inf.ethz.ch/omutlu/pub/Google-consumer-workloads-data-movement-and-PIM_asplos18.pdf">data movements accounts for the majority of energy used</a> as computation is energetically extremely cheap in comparison.
@@ -76,18 +76,18 @@
             There are even more benefits that I don't want to go into detail like no need for dependency resolution and out-of-order execution or the ability to safely prefetch all operands as all interaction are independent.
         </p>
 
-        <h2>Will this hardware be able to solve real world problems?</h2>
+        <h2>Will this hardware be able to solve real-world problems?</h2>
         <p>
-            The naive answer to this question is "Interaction Nets are general-purpose, hardware is fast, ... profit", but not so fast.
+            The naive answer to this question is "Interaction Nets are general-purpose, hardware is fast, ... profit!", but not so fast.
             While it is clear that a custom hardware architecture will be a lot faster at reducing Interaction Nets than classical hardware, the real question is whether actual problems can be solved faster.
-            While I have the believe that this kind of hardware theoretically might be faster in most application areas, this will most likely not be the case in the beginning simply due to the fact that you're going against an architecture that has been extensively optimized by tens of thousands of engineers with billions of funding over several decades.
-            The reason I think even in the beginning this hardware can have real impact is that there are <i>some</i> algorithms that benefit extremely by it.
+            While I have the belief that this kind of hardware might theoretically be faster in most application areas, this will most likely not be the case in the beginning simply due to the fact that you're going against an architecture that has been extensively optimized by tens of thousands of engineers with billions of funding over several decades.
+            The reason I think even in the beginning this hardware can have real impact is that there are <i>some</i> algorithms that benefit extremely from it.
             The type of algorithms I'm talking about have two key properties. First, they allow for parallelism, obvious enough.
             But secondly, their parallelism in not homogenous, otherwise you could perfectly accelerate them on GPUs.
             If your algorithm falls into this category, you can't really accelerate in on GPUs and your CPU does not give you the parallelism you would wish for.
-            Examples of these are discrete optimization problems (routing optimization, resource allocation, scheduling, etc.), sparse graph algorithms and processing, large areas of simulation software (finite element methods with adaptive mesh refinement, molecular dynamics, ), compilers, probabilistic programming (Bayesian inference, Markov chain Monte Carlo, etc.) and probably a lot more.
+            Examples of these are discrete optimization problems (routing optimization, resource allocation, scheduling, etc.), sparse graph algorithms and processing, large areas of simulation software (finite element methods with adaptive mesh refinement, molecular dynamics), compilers, probabilistic programming (Bayesian inference, Markov chain Monte Carlo, etc.) and probably a lot more.
             This is why I think this project is economically viable.
-            You can start with small self-contained applications which benefit the most from this type of new architecture and gradually expand the scope of applications while you optimize the architecture.
+            You can start with small, self-contained applications which benefit the most from this type of new architecture and gradually expand the scope of applications while you optimize the architecture.
         </p>
 
         <h2>How will this hardware be programmed?</h2>
