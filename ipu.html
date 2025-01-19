@@ -85,7 +85,7 @@
             The reason I think even in the beginning this hardware can have real impact is that there are <i>some</i> algorithms that benefit extremely from it.
             The type of algorithms I'm talking about have two key properties. First, they allow for parallelism, obvious enough.
             But secondly, their parallelism in not homogenous, otherwise you could perfectly accelerate them on GPUs.
-            If your algorithm falls into this category, you can't really accelerate in on GPUs and your CPU does not give you the parallelism you would wish for.
+            If your algorithm falls into this category, you can't really accelerate it on GPUs and your CPU does not give you the parallelism you would wish for.
             Examples of these are discrete optimization problems (routing optimization, resource allocation, scheduling, etc.), sparse graph algorithms and processing, large areas of simulation software (finite element methods with adaptive mesh refinement, molecular dynamics), compilers, probabilistic programming (Bayesian inference, Markov chain Monte Carlo, etc.) and probably a lot more.
             This is why I think this project is economically viable.
             You can start with small, self-contained applications which benefit the most from this type of new architecture and gradually expand the scope of applications while you optimize the architecture.
@@ -94,7 +94,7 @@
         <h2>How will this hardware be programmed?</h2>
         <p>
             Since this is general-purpose hardware you can use a general-purpose programming language to program it.
-            Current efforts (like Bend) basically focus mostly on functional-style programming in addition to some imperative feature that can easily be turned into functional ones.
+            Current efforts (like Bend) basically focus mostly on functional-style programming in addition to some imperative features that can easily be turned into functional ones.
             I believe this is unnecessarily restrictive and all that needs to be done is the effective elimination of shared mutable state.
             However, how this can be done in practice I will save for another time...
         </p>
