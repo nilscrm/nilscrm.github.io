@@ -1,25 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nils Cremer</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://kit.fontawesome.com/89ecbdbbc3.js" crossorigin="anonymous"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nils Cremer</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <style>
+    :root {
+      --bg: #fafafa;
+      --fg: #0a0a0a;
+      --muted: #6b6b6b;
+      --hover: #000000;
+      --border: rgba(0, 0, 0, 0.08);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #101010;
+        --fg: #f5f5f5;
+        --muted: #8a8a8a;
+        --hover: #ffffff;
+        --border: rgba(255, 255, 255, 0.1);
+      }
+    }
+
+    html:has(#theme-toggle:checked) {
+      --bg: #101010;
+      --fg: #f5f5f5;
+      --muted: #8a8a8a;
+      --hover: #ffffff;
+      --border: rgba(255, 255, 255, 0.1);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      html:has(#theme-toggle:checked) {
+        --bg: #fafafa;
+        --fg: #0a0a0a;
+        --muted: #6b6b6b;
+        --hover: #000000;
+        --border: rgba(0, 0, 0, 0.08);
+      }
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      transition: background-color 0.2s ease, color 0.2s ease;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    main {
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .name {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 0.75rem;
+    }
+
+    .role {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0.01em;
+      margin-bottom: 2.5rem;
+    }
+
+    .socials {
+      display: flex;
+      justify-content: center;
+      gap: 1.75rem;
+    }
+
+    .socials a {
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .socials a:hover {
+      color: var(--hover);
+      transform: translateY(-2px);
+    }
+
+    .socials svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    #theme-toggle {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .theme-toggle-label {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .theme-toggle-label:hover {
+      color: var(--hover);
+      border-color: var(--hover);
+    }
+
+    .theme-toggle-label svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    #theme-toggle:focus-visible+.theme-toggle-label {
+      outline: 2px solid var(--hover);
+      outline-offset: 2px;
+    }
+
+    .icon-sun {
+      display: none;
+    }
+
+    .icon-moon {
+      display: block;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .icon-sun {
+        display: block;
+      }
+
+      .icon-moon {
+        display: none;
+      }
+    }
+
+    html:has(#theme-toggle:checked) .icon-sun {
+      display: block;
+    }
+
+    html:has(#theme-toggle:checked) .icon-moon {
+      display: none;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      html:has(#theme-toggle:checked) .icon-sun {
+        display: none;
+      }
+
+      html:has(#theme-toggle:checked) .icon-moon {
+        display: block;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    <div class="container">
-        <h1>Nils Cremer</h1>
-        <div class="social-icons">
-            <a href="https://x.com/nilscmr" target="_blank"><i class="fab fa-x-twitter"></i></a>
-            <a href="https://www.linkedin.com/in/nils-cremer/" target="_blank"><i class="fab fa-linkedin"></i></a>
-        </div>
-        
-        <div class="article-box" onclick="window.location='ipu.html'">
-            <a href="ipu.html">Interaction Processing Units</a>
-            What will hardware based on Interaction Nets unlock in the future.
-        </div>
-        <!-- Add more articles here -->
+  <input type="checkbox" id="theme-toggle" aria-label="Toggle theme" />
+  <label for="theme-toggle" class="theme-toggle-label" title="Toggle theme">
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+      stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+    </svg>
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+      stroke-linejoin="round">
+      <circle cx="12" cy="12" r="4" />
+      <path
+        d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+    </svg>
+  </label>
+
+  <main>
+    <h1 class="name">Nils Cremer</h1>
+    <p class="role">Co-Founder @ Tendrils</p>
+    <div class="socials">
+      <a href="https://www.linkedin.com/in/nils-cremer/" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.268 2.37 4.268 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+        </svg>
+      </a>
+      <a href="https://github.com/nilscrm" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+        </svg>
+      </a>
+      <a href="https://x.com/nilscmr" aria-label="Twitter">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+        </svg>
+      </a>
     </div>
+  </main>
 </body>
+
 </html>
